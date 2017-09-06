@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Plan</title>
+    <style>
+        #error{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'travel_app:index' %}">Home</a>
+    <br>
+    <br>
+    <a href="{% url 'travel_app:logout' %}">Logout</a>
+    <br>
+    <br>
+    <h1>Add a Trip</h1>
+        <p id="error">{{errors.empty_error}}</p>
+        <p id="error">{{errors.start_error}}</p>
+        <p id="error">{{errors.end_error}}</p>
+    <form action="{% url 'travel_app:create_trip' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{request.session.user_id}}">
+        <table>
+            <tr>
+                <td>Destination:</td>
+                <td><input type="text" name="destination"></td>
+            </tr>
+            <tr>
+                <td>Description:</td>
+                <td><input type="text" name="description"></td>
+            </tr>   
+        </table>
+        <table>
+            <tr>
+                <td>Travel Date From::</td>
+                <td><input type="date" name="start_date"></td>
+            </tr>
+            <tr>
+                <td>Travel Date To:</td>
+                <td><input type="date" name="end_date"></td>
+            </tr>   
+        </table>
+        <br>
+        <input type="submit" value="Add">
+    </form>
+</body>
+</html>

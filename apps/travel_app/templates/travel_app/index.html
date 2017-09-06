@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Travel Dashboard</title>
+</head>
+<body>
+    <h1>Hello, {{request.session.user_name}}</h1>
+    <a href="{% url 'travel_app:logout' %}">Logout</a>
+    <br>
+    <br>
+    <h3>Your trip schedule:</h3>
+    <table>
+        <tr>
+            <td>Destination</td>
+            <td>Travel start date</td>
+            <td>travel end date</td>
+            <td>Plan</td>
+        </tr>
+        {% for trip in mytrips %}
+            </tr>
+                <td><a href="{% url 'travel_app:tripInfo' trip_id=trip.trip.id %}">{{trip.trip.name}}</a></td>
+                <td>{{trip.trip.start_date|date}}</td>
+                <td>{{trip.trip.end_date|date}}</td>
+                <td>{{trip.trip.description}}</td>
+            <tr>
+        {% endfor %}
+    </table>
+    <br>
+    <br>
+    <h3>Other user's travel plans:</h3>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>Destination</td>
+            <td>Travel start date</td>
+            <td>Travel end date</td>
+            <td>Do you Want to join?</td>
+        {% for trip in other %}
+            </tr>
+                <td>{{trip.creator.name}}</td>
+                <td><a href="{% url 'travel_app:tripInfo' trip_id=trip.id %}">{{trip.name}}</a></td>
+                <td>{{trip.start_date|date}}</td>
+                <td>{{trip.end_date|date}}</td>
+                <td><a href="{% url 'travel_app:join' trip_id=trip.id %}">Join</a></td>
+            <tr>
+        {% endfor %}
+    </table>
+<br>
+<br>
+
+    <a href="{% url 'travel_app:add' %}">Add Travel Plan</a>
+</body>
+</html>
